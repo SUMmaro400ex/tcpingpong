@@ -11,7 +11,7 @@ class HttpParser
     @first_line = raw_request.gets || raise(EmptyRequestError)
     Request.new do |r|
       r.http_method = http_method
-      r.path = parse_path
+      r.path = path
       r.headers = headers
       r.content_length = content_length
       r.post_data = read_body
@@ -28,8 +28,8 @@ class HttpParser
     !["GET", "DELETE"].include? http_method
   end
 
-  def parse_path
-    @first_line.split(' ')[1].split('?')[0]
+  def path
+    @path ||= first_line.split(' ')[1].split('?')[0]
   end
 
   def headers

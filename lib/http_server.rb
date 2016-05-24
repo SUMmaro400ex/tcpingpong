@@ -7,6 +7,8 @@ class HttpServer < TCPServer
     parser = HttpParser.new
     while socket = accept
       request = parser.parse socket
+
+
       response = "Parsed request: #{request.inspect}"
 
       socket.write response
